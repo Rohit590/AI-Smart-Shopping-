@@ -41,15 +41,15 @@ if (isset($_POST['register'])) {
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
 
-                $mail->Username = 'rohitwagh7785@gmail.com';
-                $mail->Password = 'lxfpqmdrnzmqyziu';
+                $mail->Username = 'your_email@gmail.com';
+                $mail->Password = 'you_app_password';
 
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
-                $mail->setFrom('rohitwagh7785@gmail.com', 'AI Smart Shopping');
+                $mail->setFrom('your_email@gmail.com', 'AI Smart Shopping');
 
-                $mail->addAddress('rohitwagh7785@gmail.com');
+                $mail->addAddress('your_email@gmail.com');
 
                 $mail->isHTML(true);
 
@@ -294,5 +294,6 @@ if (isset($_POST['register'])) {
         }
     </script>
 </body>
+
 
 </html>
