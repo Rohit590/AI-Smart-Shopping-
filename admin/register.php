@@ -1,14 +1,5 @@
 <?php
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require '../PHPMailer/src/PHPMailer.php';
-require '../PHPMailer/src/SMTP.php';
-require '../PHPMailer/src/Exception.php';
 include("../includes/db.php");
-
-
 
 if (isset($_POST['register'])) {
 
@@ -16,72 +7,19 @@ if (isset($_POST['register'])) {
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    /* CHECK IF ADMIN EXISTS */
-    $check1 = mysqli_query($conn, "SELECT * FROM admins WHERE email='$email'");
-    $check2 = mysqli_query($conn, "SELECT * FROM admin_requests WHERE email='$email'");
+    $check = "SELECT * FROM admin_requests WHERE email='$email'";
+    $result = mysqli_query($conn, $check);
 
-    if (mysqli_num_rows($check1) > 0) {
-        $error = "Admin already exists with this email";
-    } elseif (mysqli_num_rows($check2) > 0) {
+    if (mysqli_num_rows($result) > 0) {
         $error = "Request already submitted with this email";
     } else {
-
         $query = "INSERT INTO admin_requests(name,email,password)
-                  VALUES('$name','$email','$password')";
+              VALUES('$name','$email','$password')";
 
         if (mysqli_query($conn, $query)) {
-            $request_id = mysqli_insert_id($conn);
-
-            /* SEND EMAIL */
-            $mail = new PHPMailer(true);
-
-            try {
-
-                $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
-                $mail->SMTPAuth = true;
-
-                $mail->Username = 'your_email@gmail.com';
-                $mail->Password = 'you_app_password';
-
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = 587;
-
-                $mail->setFrom('your_email@gmail.com', 'AI Smart Shopping');
-
-                $mail->addAddress('your_email@gmail.com');
-
-                $mail->isHTML(true);
-
-                $mail->Subject = 'New Admin Request';
-
-                $mail->Body = "
-                    <h2>New Admin Registration Request</h2>
-
-                    <p><b>Name:</b> $name</p>
-                    <p><b>Email:</b> $email</p>
-
-                    <br>
-
-                    <a href='http://localhost/ai-ecommerce/admin/approve_admin.php?id=" . $request_id . "' 
-                    style='padding:10px 20px;background:green;color:white;text-decoration:none;border-radius:5px;'>
-                    Approve Admin
-                    </a>
-
-                    &nbsp;
-
-                    <a href='http://localhost/ai-ecommerce/admin/reject_admin.php?id=" . $request_id . "' 
-                    style='padding:10px 20px;background:red;color:white;text-decoration:none;border-radius:5px;'>
-                    Reject Admin
-                    </a>
-                    ";
-
-                $mail->send();
-            } catch (Exception $e) {
-                $error = "Mail error: " . $mail->ErrorInfo;
-            }
-
             $success = "Admin request sent. Wait for approval.";
+        } else {
+            $error = "Registration failed";
         }
     }
 }
@@ -294,6 +232,5 @@ if (isset($_POST['register'])) {
         }
     </script>
 </body>
-
 
 </html>

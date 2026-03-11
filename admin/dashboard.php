@@ -212,6 +212,7 @@ if(!isset($_SESSION['admin_id'])){
     <a href="add_product.php">Add Product</a>
     <a href="manage_product.php">Manage Products</a>
     <a href="user_list.php">Users</a>
+    <a href="admin_requests.php">Admin Requests</a>
     <a href="logout.php">Logout</a>
 </div>
 
