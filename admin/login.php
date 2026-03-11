@@ -166,9 +166,7 @@ if(isset($_POST['login'])){
     Don't have account ?
     <a href="register.php">Register</a>
 
-    <?php if(isset($error)){ ?>
-        <div class="error"><?php echo $error; ?></div>
-    <?php } ?>
+    
 
     <form method="POST">
 
@@ -186,8 +184,12 @@ if(isset($_POST['login'])){
             Login
         </button>
 
+        
     </form>
 
+    <?php if(isset($error)){ ?>
+        <div class="error"><?php echo $error; ?></div>
+        <?php } ?>
 </div>
 
 </body>

@@ -211,7 +211,7 @@ if(!isset($_SESSION['admin_id'])){
     <a href="dashboard.php" class="active">Dashboard</a>
     <a href="add_product.php">Add Product</a>
     <a href="manage_product.php">Manage Products</a>
-    <a href="users.php">Users</a>
+    <a href="user_list.php">Users</a>
     <a href="logout.php">Logout</a>
 </div>
 
