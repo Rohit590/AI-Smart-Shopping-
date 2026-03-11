@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/db.php");
+$error="";
 
 if(isset($_POST['login'])){
 
@@ -22,11 +23,11 @@ if(isset($_POST['login'])){
             header("Location: dashboard.php");
         }
         else{
-            echo "Incorrect Password";
+            $error = "Incorrect Password";
         }
     }
     else{
-        echo "User not found";
+        $error =  "User not found";
     }
 }
 ?>
@@ -255,6 +256,16 @@ if(isset($_POST['login'])){
             background:#151b3a;
         }
 
+        .error-message{
+            background:#ff4d4f;
+            color:white;
+            padding:10px;
+            border-radius:6px;
+            margin-top:12px;
+            font-size:14px;
+            font-weight:500;
+            text-align:center;
+        }
     </style>
 </head>
 
@@ -266,6 +277,7 @@ if(isset($_POST['login'])){
     <h2>Welcome Back 👋</h2>
     Don't have account ?
     <a href="register.php">Register</a>
+    
     
 
     <form method="POST">
@@ -285,7 +297,14 @@ if(isset($_POST['login'])){
         </button>
 
     </form>
+    <?php if($error != ""){ ?>
+        <div class="error-message">
+            <?php echo $error; ?>
+        </div>
+    <?php } ?>
 </div>
+
+
 
 <script>
     gsap.from("#loginBox",{
